@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dogs Page</title>
+</head>
+<body>
+<h1>Dogs: </h1>
+<div>
+  <table>
+    <thead>
+    <td>Id</td>
+    <td>Name</td>
+    <td>Breed</td>
+    <td>Age</td>
+    </thead>
+    <tbody>
+    <tr th:each="dog : ${dogList}">
+      <td th:text="${dog.id}"></td>
+      <td th:text="${dog.name}"></td>
+      <td th:text="${dog.breed}"></td>
+      <td th:text="${dog.age}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

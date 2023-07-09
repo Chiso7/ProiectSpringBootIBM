@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Animals Page</title>
+</head>
+<body>
+<h1>Animals: </h1>
+<div>
+  <table>
+    <thead>
+    <td>Id</td>
+    <td>Name</td>
+    <td>Animal</td>
+    <td>Breed</td>
+    <td>Age</td>
+    </thead>
+    <tbody>
+    <tr th:each="animal : ${animalList}">
+      <td th:text="${animal.id}"></td>
+      <td th:text="${animal.name}"></td>
+      <td th:text="${animal.animal}"></td>
+      <td th:text="${animal.breed}"></td>
+      <td th:text="${animal.age}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
