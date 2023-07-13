@@ -3,16 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>Cats Page</title>
+  <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" type="text/css">
 </head>
 <body>
-<h1>Cats: </h1>
 <div>
-  <table>
-    <thead>
-    <td>Id</td>
-    <td>Name</td>
-    <td>Breed</td>
-    <td>Age</td>
+  <h3>Cats:</h3>
+</div>
+<div>
+  <table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Breed</th>
+      <th>Age</th>
+    </tr>
     </thead>
     <tbody>
     <tr th:each="cat : ${catList}">
@@ -25,4 +30,5 @@
   </table>
 </div>
 </body>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"/>
 </html>

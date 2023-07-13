@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Animal Form</title>
+  <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" type="text/css">
+</head>
+<body>
+<div class="container-fluid">
+  <div>
+    <h3>Add an animal</h3>
+  </div>
+  <form action="#" method="post" th:action="@{/submit-animal}" th:object="${animal}">
+    <div class="row col-lg-12">
+      <div class="form-group row">
+        <label class="col-12 col-form-label" for="name">Name:</label>
+        <div>
+          <input class="form-control" th:field="${animal.name}" type="text">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="animal">Animal:</label>
+        <div>
+          <select class="form-select mb-3" th:field="${animal.animal}">
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-12 col-form-label" for="breed">Breed:</label>
+        <div>
+          <input class="form-control" th:field="${animal.breed}" type="text">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-12 col-form-label" for="age">Age:</label>
+        <div>
+          <input class="form-control" th:field="${animal.age}" type="text">
+        </div>
+      </div>
+      <div class="form-group row">
+        <button class="btn btn-primary" type="submit">
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"/>
+</html>

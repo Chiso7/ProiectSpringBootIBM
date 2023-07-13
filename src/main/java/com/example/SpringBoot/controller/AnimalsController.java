@@ -6,11 +6,14 @@ import com.example.SpringBoot.model.Dog;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import java.util.List;
 
 @Controller
 public class AnimalsController {
-    @GetMapping(value = "/animals/")
+    @GetMapping(value = "/animals")
     public String printAnimals(Model model) {
         Dog d1 = new Dog(1, "Labus", "Golden Retriever", 2);
         Dog d2 = new Dog(2, "Quake", "Husky", 1);
@@ -21,5 +24,17 @@ public class AnimalsController {
 
         model.addAttribute("animalList", animalList);
         return "animals";
+    }
+
+    @GetMapping(value = "/animal-form")
+    public String addAnimals (Model model) {
+        model.addAttribute("animal", new Animal());
+        return "animal-form";
+    }
+
+    @PostMapping(value = "/submit-animal")
+    public String submitAnimals(@ModelAttribute Animal animal) {
+        System.out.println(animal);
+        return null;
     }
 }

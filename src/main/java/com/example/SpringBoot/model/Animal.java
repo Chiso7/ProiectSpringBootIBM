@@ -3,10 +3,12 @@ package com.example.SpringBoot.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Animal {
     private int id;
     private String name;

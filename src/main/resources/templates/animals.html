@@ -3,17 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <title>Animals Page</title>
+  <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" type="text/css">
 </head>
 <body>
-<h1>Animals: </h1>
 <div>
-  <table>
-    <thead>
-    <td>Id</td>
-    <td>Name</td>
-    <td>Animal</td>
-    <td>Breed</td>
-    <td>Age</td>
+  <h3>Animals:</h3>
+</div>
+<div>
+  <table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Animal</th>
+      <th>Breed</th>
+      <th>Age</th>
+    </tr>
     </thead>
     <tbody>
     <tr th:each="animal : ${animalList}">
@@ -27,4 +32,5 @@
   </table>
 </div>
 </body>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"/>
 </html>

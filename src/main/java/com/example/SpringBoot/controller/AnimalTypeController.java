@@ -6,7 +6,10 @@ import com.example.SpringBoot.model.Dog;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import java.util.List;
 
 @Controller
@@ -38,9 +41,31 @@ public class AnimalTypeController {
             model.addAttribute("catList", catList);
             return "cat";
         }
-        else {
-            model.addAttribute("animalList", animalList);
-            return "animals";
+        return null;
+    }
+
+    @GetMapping(value = "/{type}-form")
+    public String addAnimalType(@PathVariable String type, Model model) {
+        if(type.equals("cat")) {
+            model.addAttribute("cat", new Cat());
+            return "cat-form";
+        }
+        else if(type.equals("dog")) {
+            model.addAttribute("dog", new Dog());
+            return "dog-form";
+        }
+        return null;
+    }
+
+    @PostMapping(value = "/submit-{type}")
+    public void submitAnimalType(@PathVariable String type, @ModelAttribute Animal animal) {
+        if(type.equals("dog")) {
+            animal.setAnimal("Dog");
+            System.out.println(animal);
+        }
+        else if(type.equals("cat")) {
+            animal.setAnimal("Cat");
+            System.out.println(animal);
         }
     }
 }

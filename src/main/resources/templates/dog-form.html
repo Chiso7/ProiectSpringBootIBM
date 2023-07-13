@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dog Form</title>
+  <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" type="text/css">
+</head>
+<body>
+<div class="container-fluid">
+  <div>
+    <h3>Add a dog</h3>
+  </div>
+  <form action="#" method="post" th:action="@{/submit-dog}" th:object="${dog}">
+    <div class="row col-lg-12">
+      <div class="form-group row">
+        <label class="col-12 col-form-label" for="name">Name:</label>
+        <div>
+          <input class="form-control" th:field="${dog.name}" type="text">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-12 col-form-label" for="breed">Breed:</label>
+        <div>
+          <input class="form-control" th:field="${dog.breed}" type="text">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-12 col-form-label" for="age">Age:</label>
+        <div>
+          <input class="form-control" th:field="${dog.age}" type="text">
+        </div>
+      </div>
+      <div class="form-group row">
+        <button class="btn btn-primary" type="submit">
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"/>
+</html>
