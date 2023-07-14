@@ -43,29 +43,4 @@ public class AnimalTypeController {
         }
         return null;
     }
-
-    @GetMapping(value = "/{type}-form")
-    public String addAnimalType(@PathVariable String type, Model model) {
-        if(type.equals("cat")) {
-            model.addAttribute("cat", new Cat());
-            return "cat-form";
-        }
-        else if(type.equals("dog")) {
-            model.addAttribute("dog", new Dog());
-            return "dog-form";
-        }
-        return null;
-    }
-
-    @PostMapping(value = "/submit-{type}")
-    public void submitAnimalType(@PathVariable String type, @ModelAttribute Animal animal) {
-        if(type.equals("dog")) {
-            animal.setAnimal("Dog");
-            System.out.println(animal);
-        }
-        else if(type.equals("cat")) {
-            animal.setAnimal("Cat");
-            System.out.println(animal);
-        }
-    }
 }
