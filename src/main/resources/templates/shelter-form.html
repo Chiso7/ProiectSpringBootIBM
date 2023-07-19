@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shelter form</title>
+  <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" type="text/css">
+</head>
+<body>
+<div class="container-fluid">
+  <div class="text-center">
+    <h4>Add a shelter:</h4>
+  </div>
+  <form action="#" method="post" th:action="@{/submit-shelter}" th:object="${shelter}" class="text-center w-50 mx-auto">
+    <div class="row col-lg-12">
+      <div class="form-group row text-center">
+        <label class="col-12 col-form-label" for="name">Name:</label>
+        <div>
+          <input class="form-control" th:field="*{name}" type="text">
+        </div>
+      </div>
+
+      <div class="form-group row text-center">
+        <label class="col-12 col-form-label" for="address">Address:</label>
+        <div>
+          <input class="form-control" th:field="*{address}" type="text">
+        </div>
+      </div>
+
+      <div class="form-group row text-center my-3">
+        <button class="btn btn-dark" type="submit">
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"/>
+</html>

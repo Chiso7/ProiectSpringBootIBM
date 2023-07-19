@@ -2,35 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Animals Page</title>
+  <title>Animals</title>
   <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" type="text/css">
 </head>
 <body>
-<div>
-  <h3>Animals:</h3>
-</div>
-<div>
-  <table class="table">
-    <thead class="thead-dark">
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Animal</th>
-      <th>Breed</th>
-      <th>Age</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="animal : ${animalList}">
-      <td th:text="${animal.id}"></td>
-      <td th:text="${animal.name}"></td>
-      <td th:text="${animal.animal}"></td>
-      <td th:text="${animal.breed}"></td>
-      <td th:text="${animal.age}"></td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+  <div class="text-center">
+    <h4>Animals:</h4>
+  </div>
+  <div>
+    <table class="table table-bordered col-xs-1 text-center w-50 mx-auto">
+      <thead class="table-dark">
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Animal</th>
+        <th>Breed</th>
+        <th>Age</th>
+        <th>Shelter</th>
+        <th colspan="2">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="animal : ${animalList}" th:object="${animal}">
+        <td class="col-sm-1" th:text="${animal.id}"></td>
+        <td class="col-md-2" th:text="${animal.name}"></td>
+        <td class="col-md-1" th:text="${animal.animal}"></td>
+        <td class="col-md-2" th:text="${animal.breed}"></td>
+        <td class="col-md-1" th:text="${animal.age}"></td>
+        <td class="col-md-2" th:text="${animal.shelter.name}"></td>
+        <td class="col-md-1">
+          <a th:href="@{'/edit-animal/' + ${animal.id}}" type="button" class="btn btn-dark">Edit</a>
+        </td>
+        <td class="col-md-1">
+          <a th:href="@{'/delete-animal/' + ${animal.id}}" type="button" class="btn btn-dark">Delete</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="d-grid col-2 mx-auto">
+    <a th:href="@{'/animal-form'}" type="button" class="btn btn-dark">Add animal</a>
+  </div>
 </body>
 <script th:src="@{/bootstrap/js/bootstrap.min.js}"/>
 </html>

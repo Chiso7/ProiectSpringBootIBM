@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${animalType}"></title>
+  <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" type="text/css">
+</head>
+<body>
+<div class="text-center">
+  <h4 th:text="${animalType}"></h4>
+</div>
+<div>
+  <table class="table table-bordered col-xs-1 text-center w-50 mx-auto">
+    <thead class="table-dark">
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Breed</th>
+      <th>Age</th>
+      <th>Shelter</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="animal : ${animalTypeList}">
+      <td class="col-sm-1" th:text="${animal.id}"></td>
+      <td class="col-md-2" th:text="${animal.name}"></td>
+      <td class="col-md-2" th:text="${animal.breed}"></td>
+      <td class="col-md-1" th:text="${animal.age}"></td>
+      <td class="col-md-2" th:text="${animal.shelter.name}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"/>
+</html>

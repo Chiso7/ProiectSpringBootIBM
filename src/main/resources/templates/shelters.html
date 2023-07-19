@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shelters</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" type="text/css">
+</head>
+<body>
+<div class="text-center">
+    <h4>Shelters:</h4>
+</div>
+<div>
+    <table class="table table-bordered col-xs-1 text-center w-50 mx-auto">
+        <thead class="table-dark">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Animals</th>
+            <th colspan="2">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="shelter : ${shelterList}">
+            <td class="col-sm-1" th:text="${shelter.id}"></td>
+            <td class="col-md-2" th:text="${shelter.name}"></td>
+            <td class="col-md-2" th:text="${shelter.address}"></td>
+            <th class="col-md-1" th:text="${shelter.animalCount()}"></th>
+            <td class="col-md-1">
+                <a th:href="@{'/edit-shelter/' + ${shelter.id}}" type="button" class="btn btn-dark">Edit</a>
+            </td>
+            <td class="col-md-1">
+                <a th:href="@{'/delete-shelter/' + ${shelter.id}}" type="button" class="btn btn-dark">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="d-grid col-2 mx-auto">
+    <a th:href="@{'/shelter-form'}" type="button" class="btn btn-dark">Add shelter</a>
+</div>
+</body>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"/>
+</html>
