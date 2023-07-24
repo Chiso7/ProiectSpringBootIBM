@@ -19,15 +19,14 @@
         </div>
       </div>
 
-<!--      <div class="form-group row text-center">-->
-<!--        <label for="animal">Animal:</label>-->
-<!--        <div>-->
-<!--          <select class="form-select mb-3" th:field="*{animal}">-->
-<!--            <option value="Dog">Dog</option>-->
-<!--            <option value="Cat">Cat</option>-->
-<!--          </select>-->
-<!--        </div>-->
-<!--      </div>-->
+      <div class="form-group row text-center">
+        <label for="animal">Animal:</label>
+        <div>
+          <select class="form-select mb-3" th:field="*{type}">
+            <option th:each="animalType : ${typeList}" th:text="${animalType}" th:value="${animalType}"></option>
+          </select>
+        </div>
+      </div>
 
       <div class="form-group row text-center">
         <label class="col-12 col-form-label" for="breed">Breed:</label>

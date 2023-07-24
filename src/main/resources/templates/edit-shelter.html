@@ -11,6 +11,7 @@
         <h4>Edit a shelter:</h4>
     </div>
     <form action="#" method="post" th:action="@{/save-shelter}" th:object="${shelter}" class="text-center w-50 mx-auto">
+        <input class="d-none" th:field="*{id}" type="text">
         <div class="row col-lg-12">
             <div class="form-group row text-center">
                 <label class="col-12 col-form-label" for="name">Name:</label>

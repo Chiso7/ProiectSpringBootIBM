@@ -2,6 +2,7 @@ package com.example.SpringBoot.controller;
 
 import com.example.SpringBoot.model.Animal;
 import com.example.SpringBoot.model.Shelter;
+import com.example.SpringBoot.model.Type;
 import com.example.SpringBoot.repository.AnimalRepository;
 import com.example.SpringBoot.repository.ShelterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -28,23 +31,21 @@ public class AnimalsController {
     @GetMapping(value = "/animals/{animal}")
     public String printAnimalType(@PathVariable String animal, Model model) {
         List<Animal> animalList = animalRepository.findAll();
-        List<Animal> typeList;
-        if (animal.equals("dogs")) {
-            typeList = animalList.stream()
-                    .filter(a -> a.getAnimal().equals("Dog"))
-                    .toList();
-        }
-        else if (animal.equals("cats")) {
-            typeList = animalList.stream()
-                    .filter(a -> a.getAnimal().equals("Cat"))
-                    .toList();
-        }
-        else return "redirect:/animals";
+        List<String> animalTypes = Arrays.stream(Type.values()).map(Enum::toString).toList();
 
-        model.addAttribute("animalTypeList", typeList);
-        animal = animal.substring(0,1).toUpperCase() + animal.substring(1).toLowerCase() + ":";
-        model.addAttribute("animalType", animal);
-        return "animal-type";
+        String animalString = Character.toUpperCase(animal.charAt(0)) + animal.substring(1, animal.length() - 1);
+        for(String type : animalTypes) {
+            if (type.equals(animalString)) {
+                List<Animal> typeList = animalList.stream()
+                        .filter(a -> a.getType().toString().equals(animalString))
+                        .toList();
+                model.addAttribute("animalTypeList", typeList);
+                animal = Character.toUpperCase(animal.charAt(0)) + animal.substring(1).toLowerCase() + ":";
+                model.addAttribute("animalType", animal);
+                return "animal-type";
+            }
+        }
+        return "redirect:/animals";
     }
 
     @GetMapping(value = "/animal-form")
@@ -52,6 +53,9 @@ public class AnimalsController {
         model.addAttribute("animal", new Animal());
         List<Shelter> shelterList = shelterRepository.findAll();
         model.addAttribute("shelterList", shelterList);
+
+        List<String> typeList = Arrays.stream(Type.values()).map(Enum::toString).toList();
+        model.addAttribute("typeList", typeList);
         return "animal-form";
     }
 
@@ -80,6 +84,8 @@ public class AnimalsController {
             Animal animal = animalRepository.findById(animalID).get();
             editView.addObject("animal", animal);
 
+            List<String> typeList = Arrays.stream(Type.values()).map(Enum::toString).toList();
+            model.addAttribute("typeList", typeList);
             List<Shelter> shelterList = shelterRepository.findAll();
             model.addAttribute("shelterList", shelterList);
         }
@@ -88,7 +94,7 @@ public class AnimalsController {
 
     @PostMapping(value = "/save-animal")
     public String saveEditedAnimal(@ModelAttribute("animal") Animal animal) {
-        System.out.println(animal);
+        animalRepository.save(animal);
         return "redirect:/animals";
     }
 

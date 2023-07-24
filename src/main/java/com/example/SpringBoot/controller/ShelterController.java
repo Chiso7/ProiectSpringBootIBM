@@ -46,9 +46,9 @@ public class ShelterController {
             Shelter shelter = shelterRepository.findById(shelterID).get();
             String shelterName = shelter.getName() + " (" + shelter.getAddress() + ")" + ":";
             List<Animal> animalList = animalRepository.findAll()
-                    .stream()
-                    .filter(a -> a.getShelterID() == shelterID)
-                    .toList();
+                                                     .stream()
+                                                     .filter(a -> a.getShelterID() == shelterID)
+                                                     .toList();
             model.addAttribute("animalType", shelterName);
             model.addAttribute("animalTypeList", animalList);
             return "animal-type";
@@ -86,8 +86,7 @@ public class ShelterController {
 
     @PostMapping(value = "/save-shelter")
     public String saveEditedShelter(@ModelAttribute("shelter") Shelter shelter) {
-        System.out.println(shelter.getId() + " " + shelter.getNameAndAddress());
-//        shelterRepository.save(shelter);
+        shelterRepository.save(shelter);
         return "redirect:/shelters";
     }
 }

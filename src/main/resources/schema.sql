@@ -10,7 +10,7 @@ create table animal
 (
     id         integer auto_increment,
     name       varchar(50),
-    animal     varchar(50),
+    type       enum('Dog', 'Cat'),
     breed      varchar(50),
     age        integer,
     id_shelter integer,

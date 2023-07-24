@@ -15,6 +15,7 @@
     <tr>
       <th>Id</th>
       <th>Name</th>
+      <th>Animal</th>
       <th>Breed</th>
       <th>Age</th>
       <th>Shelter</th>
@@ -24,6 +25,7 @@
     <tr th:each="animal : ${animalTypeList}">
       <td class="col-sm-1" th:text="${animal.id}"></td>
       <td class="col-md-2" th:text="${animal.name}"></td>
+      <td class="col-md-1" th:text="${animal.type}"></td>
       <td class="col-md-2" th:text="${animal.breed}"></td>
       <td class="col-md-1" th:text="${animal.age}"></td>
       <td class="col-md-2" th:text="${animal.shelter.name}"></td>

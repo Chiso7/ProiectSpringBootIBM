@@ -11,6 +11,7 @@
     <h4>Edit an animal:</h4>
   </div>
   <form action="#" method="post" th:action="@{/save-animal}" th:object="${animal}" class="text-center w-50 mx-auto">
+    <input class="d-none" th:field="*{id}" type="text">
     <div class="row col-lg-12">
       <div class="form-group row text-center">
         <label class="col-12 col-form-label" for="name">Name:</label>
@@ -19,15 +20,14 @@
         </div>
       </div>
 
-<!--      <div class="form-group row text-center">-->
-<!--        <label for="animal">Animal:</label>-->
-<!--        <div>-->
-<!--          <select class="form-select mb-3" th:field="*{animal}">-->
-<!--            <option value="Dog">Dog</option>-->
-<!--            <option value="Cat">Cat</option>-->
-<!--          </select>-->
-<!--        </div>-->
-<!--      </div>-->
+      <div class="form-group row text-center">
+        <label for="animal">Animal:</label>
+        <div>
+          <select class="form-select mb-3" th:field="*{type}">
+            <option th:each="animalType : ${typeList}" th:text="${animalType}" th:value="${animalType}"></option>
+          </select>
+        </div>
+      </div>
 
       <div class="form-group row text-center">
         <label class="col-12 col-form-label" for="breed">Breed:</label>

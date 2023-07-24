@@ -19,8 +19,9 @@ public class Animal {
 
     @Column(name = "name")
     private String name;
-    @Column(name = "animal")
-    private String animal;
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private Type type;
     @Column(name = "breed")
     private String breed;
     @Column(name = "age")
@@ -29,10 +30,10 @@ public class Animal {
     @ManyToOne
     @JoinColumn(name = "id_shelter")
     private Shelter shelter;
-    public Animal(int id, String name, String animal, String breed, int age) {
+    public Animal(int id, String name, Type type, String breed, int age) {
         this.id = id;
         this.name = name;
-        this.animal = animal;
+        this.type = type;
         this.breed = breed;
         this.age = age;
     }
@@ -41,3 +42,4 @@ public class Animal {
         return shelter.getId();
     }
 }
+
