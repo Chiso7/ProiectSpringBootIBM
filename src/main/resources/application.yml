@@ -13,8 +13,13 @@ spring:
   h2:
     console:
       enabled: true
+  security:
+    user:
+      name: admin
+      password: 1234
 
 #logging:
 #  level:
 #    root: ERROR
 #    org.foo.bar.baz: INFO
+
