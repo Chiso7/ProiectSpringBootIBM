@@ -1,9 +1,9 @@
 package com.example.SpringBoot.controller;
 
-import com.example.SpringBoot.model.Animal;
-import com.example.SpringBoot.model.Shelter;
-import com.example.SpringBoot.repository.AnimalRepository;
-import com.example.SpringBoot.repository.ShelterRepository;
+import com.example.SpringBoot.dto.AnimalDTO;
+import com.example.SpringBoot.dto.ShelterDTO;
+import com.example.SpringBoot.service.AnimalService;
+import com.example.SpringBoot.service.ShelterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,79 +14,81 @@ import java.util.List;
 @Controller
 public class ShelterController {
     @Autowired
-    private ShelterRepository shelterRepository;
+    private AnimalService animalService;
     @Autowired
-    private AnimalRepository animalRepository;
+    private ShelterService shelterService;
 
     @GetMapping(value = "/shelters")
     public String shelterOverview(Model model) {
-        List<Shelter> shelterList = shelterRepository.findAll();
+        List<ShelterDTO> shelterList = shelterService.getAllShelters();
         model.addAttribute("shelterList", shelterList);
         return "shelters";
     }
 
     @GetMapping(value = "/shelter-form")
     public String addShelter (Model model) {
-        model.addAttribute("shelter", new Shelter());
+        model.addAttribute("shelter", new ShelterDTO());
         return "shelter-form";
     }
 
     @PostMapping(value = "/submit-shelter")
-    public String submitShelter(@ModelAttribute Shelter shelter) {
+    public String submitShelter(@ModelAttribute ShelterDTO shelter) {
         if(shelter.getName().isBlank() || shelter.getAddress().isBlank())
             return "redirect:/shelter-form";
 
-        shelterRepository.save(shelter);
+        shelterService.saveShelter(shelter);
         return "redirect:/shelters";
     }
 
     @GetMapping(value = "/shelters/{shelterID}")
     public String findShelter(@PathVariable int shelterID, Model model) {
-        if(shelterRepository.findById(shelterID).isPresent()) {
-            Shelter shelter = shelterRepository.findById(shelterID).get();
-            String shelterName = shelter.getName() + " (" + shelter.getAddress() + ")" + ":";
-            List<Animal> animalList = animalRepository.findAll()
-                                                     .stream()
-                                                     .filter(a -> a.getShelterID() == shelterID)
-                                                     .toList();
-            model.addAttribute("animalType", shelterName);
-            model.addAttribute("animalTypeList", animalList);
-            return "animal-type";
-        }
-        return "redirect:/shelters";
+        ShelterDTO shelter = shelterService.findShelterByID(shelterID);
+        if(shelter == null)
+            return "redirect:/shelters";
+
+        String shelterName = shelter.getName() + " (" + shelter.getAddress() + ")" + ":";
+        List<AnimalDTO> animalList = animalService.getAllAnimals()
+                .stream()
+                .filter(a -> a.getShelterID() == shelterID)
+                .toList();
+        model.addAttribute("animalType", shelterName);
+        model.addAttribute("animalTypeList", animalList);
+        return "animal-type";
     }
 
     @GetMapping(value = "/delete-shelter/{id}")
     public String deleteShelter(@PathVariable("id") int shelterID) {
-        List<Animal> animalList = animalRepository.findAll()
-                                                .stream().filter(a -> a.getShelter().getId() == shelterID)
-                                                .toList();
+        List<AnimalDTO> animalList = animalService.getAllAnimals()
+                .stream().filter(a -> a.getShelterID() == shelterID)
+                .toList();
         List<Integer> animalIDList = animalList.stream()
-                                                .map(Animal::getId)
-                                                .toList();
+                .map(AnimalDTO::getId)
+                .toList();
         for(Integer animalID : animalIDList)
-            animalRepository.deleteById(animalID);
+            animalService.deleteAnimalByID(animalID);
 
-        shelterRepository.deleteById(shelterID);
+        shelterService.deleteShelterByID(shelterID);
         return "redirect:/shelters";
     }
 
     @GetMapping(value = "/edit-shelter/{id}")
     public ModelAndView editShelter(@PathVariable("id") int shelterID, Model model) {
         ModelAndView editView = new ModelAndView("edit-shelter");
-        if(shelterRepository.findById(shelterID).isPresent()) {
-            Shelter shelter = shelterRepository.findById(shelterID).get();
-            editView.addObject("shelter", shelter);
 
-            List<Shelter> shelterList = shelterRepository.findAll();
-            model.addAttribute("shelterList", shelterList);
-        }
+        ShelterDTO shelter = shelterService.findShelterByID(shelterID);
+        ModelAndView shelterOverview = new ModelAndView("redirect:/shelters");
+        if(shelter == null)
+            return shelterOverview;
+
+        editView.addObject("shelter", shelter);
+        List<ShelterDTO> shelterList = shelterService.getAllShelters();
+        model.addAttribute("shelterList", shelterList);
         return editView;
     }
 
     @PostMapping(value = "/save-shelter")
-    public String saveEditedShelter(@ModelAttribute("shelter") Shelter shelter) {
-        shelterRepository.save(shelter);
+    public String saveEditedShelter(@ModelAttribute("shelter") ShelterDTO shelter) {
+        shelterService.saveShelter(shelter);
         return "redirect:/shelters";
     }
 }

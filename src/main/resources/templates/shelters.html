@@ -7,6 +7,7 @@
 </head>
 <body>
 <div class="text-center">
+    <br><br><br>
     <h4>Shelters:</h4>
 </div>
 <div>
@@ -16,7 +17,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Address</th>
-            <th>Animals</th>
+            <th colspan="2">Animals</th>
             <th colspan="2">Actions</th>
         </tr>
         </thead>
@@ -25,7 +26,10 @@
             <td class="col-sm-1" th:text="${shelter.id}"></td>
             <td class="col-md-2" th:text="${shelter.name}"></td>
             <td class="col-md-2" th:text="${shelter.address}"></td>
-            <th class="col-md-1" th:text="${shelter.animalCount()}"></th>
+            <td class="col-md-1" th:text="${shelter.getAnimalCount()}"></td>
+            <td class="col-md-1">
+                <a th:href="@{'/shelters/' + ${shelter.id}}" type="button" class="btn btn-dark">View</a>
+            </td>
             <td class="col-md-1">
                 <a th:href="@{'/edit-shelter/' + ${shelter.id}}" type="button" class="btn btn-dark">Edit</a>
             </td>
@@ -36,8 +40,14 @@
         </tbody>
     </table>
 </div>
+<br>
 <div class="d-grid col-2 mx-auto">
     <a th:href="@{'/shelter-form'}" type="button" class="btn btn-dark">Add shelter</a>
+</div>
+
+<br><br>
+<div class="d-grid col-2 mx-auto">
+    <a th:href="@{'/animals'}" type="button" class="btn btn-dark">Animals</a>
 </div>
 </body>
 <script th:src="@{/bootstrap/js/bootstrap.min.js}"/>

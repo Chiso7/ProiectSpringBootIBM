@@ -6,43 +6,60 @@
   <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" type="text/css">
 </head>
 <body>
-  <div class="text-center">
-    <h4>Animals:</h4>
+<div class="text-center">
+  <br><br><br>
+  <h4>Animals:</h4>
+</div>
+<div>
+  <table class="table table-bordered col-xs-1 text-center w-50 mx-auto">
+    <thead class="table-dark">
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Animal</th>
+      <th>Breed</th>
+      <th>Age</th>
+      <th colspan="2">Shelter</th>
+      <th colspan="2">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="animal : ${animalList}" th:object="${animal}">
+      <td class="col-sm-1" th:text="${animal.id}"></td>
+      <td class="col-md-2" th:text="${animal.name}"></td>
+      <td class="col-md-1" th:text="${animal.type}"></td>
+      <td class="col-md-2" th:text="${animal.breed}"></td>
+      <td class="col-md-1" th:text="${animal.age}"></td>
+      <td class="col-md-2" th:text="${animal.getShelterName()}"></td>
+      <td class="col-md-1">
+        <a th:href="@{'/shelters/' + ${animal.getShelterID()}}" type="button" class="btn btn-dark">View</a>
+      </td>
+      <td class="col-md-1">
+        <a th:href="@{'/edit-animal/' + ${animal.id}}" type="button" class="btn btn-dark">Edit</a>
+      </td>
+      <td class="col-md-1">
+        <a th:href="@{'/delete-animal/' + ${animal.id}}" type="button" class="btn btn-dark">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<br>
+<div class="d-grid col-2 mx-auto">
+  <a th:href="@{'/animal-form'}" type="button" class="btn btn-dark">Add animal</a>
+</div>
+<br><br>
+<div class="d-grid col-2 mx-auto">
+  <a th:href="@{'/shelters'}" type="button" class="btn btn-dark">Shelters</a>
+</div>
+<br><br>
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="d-grid col-2 mx-1" th:each="type: ${animalTypes}">
+      <a th:href="@{'/animals/' + ${type.toLowerCase()} + 's'}" type="button" class="btn btn-dark" th:text="'View' + ' ' + ${type.toLowerCase()} + 's'"></a>
+    </div>
   </div>
-  <div>
-    <table class="table table-bordered col-xs-1 text-center w-50 mx-auto">
-      <thead class="table-dark">
-      <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Animal</th>
-        <th>Breed</th>
-        <th>Age</th>
-        <th>Shelter</th>
-        <th colspan="2">Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="animal : ${animalList}" th:object="${animal}">
-        <td class="col-sm-1" th:text="${animal.id}"></td>
-        <td class="col-md-2" th:text="${animal.name}"></td>
-        <td class="col-md-1" th:text="${animal.type}"></td>
-        <td class="col-md-2" th:text="${animal.breed}"></td>
-        <td class="col-md-1" th:text="${animal.age}"></td>
-        <td class="col-md-2" th:text="${animal.shelter.name}"></td>
-        <td class="col-md-1">
-          <a th:href="@{'/edit-animal/' + ${animal.id}}" type="button" class="btn btn-dark">Edit</a>
-        </td>
-        <td class="col-md-1">
-          <a th:href="@{'/delete-animal/' + ${animal.id}}" type="button" class="btn btn-dark">Delete</a>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="d-grid col-2 mx-auto">
-    <a th:href="@{'/animal-form'}" type="button" class="btn btn-dark">Add animal</a>
-  </div>
+</div>
 </body>
 <script th:src="@{/bootstrap/js/bootstrap.min.js}"/>
 </html>

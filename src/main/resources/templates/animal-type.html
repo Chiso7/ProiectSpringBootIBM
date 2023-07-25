@@ -7,6 +7,7 @@
 </head>
 <body>
 <div class="text-center">
+  <br><br><br>
   <h4 th:text="${animalType}"></h4>
 </div>
 <div>
@@ -28,10 +29,21 @@
       <td class="col-md-1" th:text="${animal.type}"></td>
       <td class="col-md-2" th:text="${animal.breed}"></td>
       <td class="col-md-1" th:text="${animal.age}"></td>
-      <td class="col-md-2" th:text="${animal.shelter.name}"></td>
+      <td class="col-md-2" th:text="${animal.getShelterName()}"></td>
     </tr>
     </tbody>
   </table>
+</div>
+<br><br>
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="d-grid col-2 mx-1">
+      <a th:href="@{'/animals'}" type="button" class="btn btn-dark">Animals</a>
+    </div>
+    <div class="d-grid col-2 mx-1">
+      <a th:href="@{'/shelters'}" type="button" class="btn btn-dark">Shelters</a>
+    </div>
+  </div>
 </div>
 </body>
 <script th:src="@{/bootstrap/js/bootstrap.min.js}"/>

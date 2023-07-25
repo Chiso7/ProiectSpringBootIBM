@@ -8,6 +8,7 @@
 <body>
 <div class="container-fluid">
   <div class="text-center">
+    <br><br><br>
     <h4>Edit an animal:</h4>
   </div>
   <form action="#" method="post" th:action="@{/save-animal}" th:object="${animal}" class="text-center w-50 mx-auto">
@@ -46,12 +47,13 @@
       <div class="form-group row text-center">
         <label for="shelter">Shelter:</label>
         <div>
-          <select class="form-select mb-3" th:field="*{shelter.id}">
+          <select class="form-select mb-3" th:field="*{shelterID}">
             <option th:each="shelter : ${shelterList}" th:text="${shelter.getNameAndAddress()}" th:value="${shelter.id}"></option>
           </select>
         </div>
       </div>
 
+      <br>
       <div class="form-group row text-center">
         <button class="btn btn-dark" type="submit">
           Submit
@@ -59,6 +61,17 @@
       </div>
     </div>
   </form>
+  <br><br>
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="d-grid col-2 mx-1">
+        <a th:href="@{'/animals'}" type="button" class="btn btn-dark">Animals</a>
+      </div>
+      <div class="d-grid col-2 mx-1">
+        <a th:href="@{'/shelters'}" type="button" class="btn btn-dark">Shelters</a>
+      </div>
+    </div>
+  </div>
 </div>
 </body>
 <script th:src="@{/bootstrap/js/bootstrap.min.js}"/>
