@@ -17,6 +17,7 @@
         <label class="col-12 col-form-label" for="name">Name:</label>
         <div>
           <input class="form-control" th:field="*{name}" type="text">
+          <span class="text-danger" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">Name error</span>
         </div>
       </div>
 
@@ -33,6 +34,7 @@
         <label class="col-12 col-form-label" for="breed">Breed:</label>
         <div>
           <input class="form-control" th:field="*{breed}" type="text">
+          <span class="text-danger" th:errors="*{breed}" th:if="${#fields.hasErrors('breed')}">Breed error</span>
         </div>
       </div>
 
@@ -40,6 +42,7 @@
         <label class="col-12 col-form-label" for="age">Age:</label>
         <div>
           <input class="form-control" th:field="*{age}" type="text">
+          <span class="text-danger" th:errors="*{age}" th:if="${#fields.hasErrors('age')}">Age error</span>
         </div>
       </div>
 

@@ -4,9 +4,11 @@ import com.example.SpringBoot.dto.AnimalDTO;
 import com.example.SpringBoot.dto.ShelterDTO;
 import com.example.SpringBoot.service.AnimalService;
 import com.example.SpringBoot.service.ShelterService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
@@ -32,9 +34,9 @@ public class ShelterController {
     }
 
     @PostMapping(value = "/submit-shelter")
-    public String submitShelter(@ModelAttribute ShelterDTO shelter) {
-        if(shelter.getName().isBlank() || shelter.getAddress().isBlank())
-            return "redirect:/shelter-form";
+    public String submitShelter(@Valid @ModelAttribute("shelter") ShelterDTO shelter, BindingResult bindingResult) {
+        if(bindingResult.hasErrors())
+            return "shelter-form";
 
         shelterService.saveShelter(shelter);
         return "redirect:/shelters";
@@ -87,7 +89,10 @@ public class ShelterController {
     }
 
     @PostMapping(value = "/save-shelter")
-    public String saveEditedShelter(@ModelAttribute("shelter") ShelterDTO shelter) {
+    public String saveEditedShelter(@Valid @ModelAttribute("shelter") ShelterDTO shelter, BindingResult bindingResult) {
+        if(bindingResult.hasErrors())
+            return "edit-shelter";
+
         shelterService.saveShelter(shelter);
         return "redirect:/shelters";
     }

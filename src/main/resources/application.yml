@@ -22,4 +22,3 @@ spring:
 #  level:
 #    root: ERROR
 #    org.foo.bar.baz: INFO
-

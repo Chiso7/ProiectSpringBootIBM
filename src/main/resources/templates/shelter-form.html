@@ -17,6 +17,7 @@
         <label class="col-12 col-form-label" for="name">Name:</label>
         <div>
           <input class="form-control" th:field="*{name}" type="text">
+          <span class="text-danger" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">Name error</span>
         </div>
       </div>
 
@@ -24,6 +25,7 @@
         <label class="col-12 col-form-label" for="address">Address:</label>
         <div>
           <input class="form-control" th:field="*{address}" type="text">
+          <span class="text-danger" th:errors="*{address}" th:if="${#fields.hasErrors('address')}">Address error</span>
         </div>
       </div>
 

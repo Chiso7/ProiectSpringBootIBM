@@ -22,7 +22,7 @@ public class AnimalMapper {
                 .name(animal.getName())
                 .type(animal.getType())
                 .breed(animal.getBreed())
-                .age(animal.getAge())
+                .age(String.valueOf(animal.getAge()))
                 .shelterName(animal.getShelter().getName())
                 .shelterID(animal.getShelterID())
                 .build();
@@ -34,7 +34,7 @@ public class AnimalMapper {
                 .name(animalDTO.getName())
                 .type(animalDTO.getType())
                 .breed(animalDTO.getBreed())
-                .age(animalDTO.getAge())
+                .age(Integer.parseInt(animalDTO.getAge()))
                 .shelter(Shelter.builder().id(animalDTO.getShelterID()).build())
                 .build();
     }

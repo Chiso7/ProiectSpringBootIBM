@@ -5,9 +5,11 @@ import com.example.SpringBoot.dto.ShelterDTO;
 import com.example.SpringBoot.model.Type;
 import com.example.SpringBoot.service.AnimalService;
 import com.example.SpringBoot.service.ShelterService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.Arrays;
@@ -67,16 +69,24 @@ public class AnimalController {
         model.addAttribute("shelterList", shelterList);
 
         List<String> typeList = Arrays.stream(Type.values())
-                .map(Enum::toString)
-                .toList();
+                                    .map(Enum::toString)
+                                    .toList();
         model.addAttribute("typeList", typeList);
         return "animal-form";
     }
 
     @PostMapping(value = "/submit-animal")
-    public String submitAnimal(@ModelAttribute("animal") AnimalDTO animal) {
-        if(animal.getAge() < 0 || animal.getName().isBlank())
-            return "redirect:/animal-form";
+    public String submitAnimal(@Valid @ModelAttribute("animal") AnimalDTO animal, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            List<ShelterDTO> shelterList = shelterService.getAllShelters();
+            model.addAttribute("shelterList", shelterList);
+
+            List<String> typeList = Arrays.stream(Type.values())
+                    .map(Enum::toString)
+                    .toList();
+            model.addAttribute("typeList", typeList);
+            return "animal-form";
+        }
 
         if(animal.getBreed().isBlank())
             animal.setBreed("-");
@@ -108,7 +118,15 @@ public class AnimalController {
     }
 
     @PostMapping(value = "/save-animal")
-    public String saveEditedAnimal(@ModelAttribute("animal") AnimalDTO animal) {
+    public String saveEditedAnimal(@Valid @ModelAttribute("animal") AnimalDTO animal, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            List<String> typeList = Arrays.stream(Type.values()).map(Enum::toString).toList();
+            model.addAttribute("typeList", typeList);
+            List<ShelterDTO> shelterList = shelterService.getAllShelters();
+            model.addAttribute("shelterList", shelterList);
+            return "edit-animal";
+        }
+
         animalService.saveAnimal(animal);
         return "redirect:/animals";
     }
