@@ -22,8 +22,8 @@ public class AnimalDTO {
     @Pattern(regexp = "^([a-zA-Z\\s]*)?$", message = "Breed must contain only letters!")
     private String breed;
 
-    @NotEmpty(message = "Age cannot be null!")
-    @Pattern(regexp = "^(?:[0-9]|[1-2][0-9]|30)?$", message = "Age must be between 0 and 30!")
+    @NotBlank(message = "Age cannot be null!")
+    @Pattern(regexp = "^\\s*(?:[0-9]|[1-2][0-9]|30)?\\s*$", message = "Age must be between 0 and 30!")
     private String age;
 
     private String shelterName;

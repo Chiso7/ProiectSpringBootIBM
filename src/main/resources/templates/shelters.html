@@ -18,7 +18,7 @@
             <th>Name</th>
             <th>Address</th>
             <th colspan="2">Animals</th>
-            <th colspan="2">Actions</th>
+            <th th:if="${isAdmin}" colspan="2">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -30,10 +30,10 @@
             <td class="col-md-1">
                 <a th:href="@{'/shelters/' + ${shelter.id}}" type="button" class="btn btn-dark">View</a>
             </td>
-            <td class="col-md-1">
+            <td th:if="${isAdmin}" class="col-md-1">
                 <a th:href="@{'/edit-shelter/' + ${shelter.id}}" type="button" class="btn btn-dark">Edit</a>
             </td>
-            <td class="col-md-1">
+            <td th:if="${isAdmin}" class="col-md-1">
                 <a th:href="@{'/delete-shelter/' + ${shelter.id}}" type="button" class="btn btn-dark">Delete</a>
             </td>
         </tr>
@@ -41,7 +41,7 @@
     </table>
 </div>
 <br>
-<div class="d-grid col-2 mx-auto">
+<div th:if="${isAdmin}" class="d-grid col-2 mx-auto">
     <a th:href="@{'/shelter-form'}" type="button" class="btn btn-dark">Add shelter</a>
 </div>
 

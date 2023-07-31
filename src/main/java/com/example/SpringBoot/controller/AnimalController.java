@@ -7,6 +7,7 @@ import com.example.SpringBoot.service.AnimalService;
 import com.example.SpringBoot.service.ShelterService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,14 +17,14 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-public class AnimalController {
+public class AnimalController extends BaseController {
     @Autowired
     private AnimalService animalService;
     @Autowired
     private ShelterService shelterService;
 
     @GetMapping(value = "/animals")
-    public String animalOverview(Model model) {
+    public String animalOverview(Model model, Authentication authentication) {
         List<AnimalDTO> animalList = animalService.getAllAnimals();
         model.addAttribute("animalList", animalList);
 
@@ -31,7 +32,8 @@ public class AnimalController {
                                         .map(Enum::toString)
                                         .toList();
         model.addAttribute("animalTypes", animalTypes);
-
+        authentication.getPrincipal();
+        addUserToModel(model, authentication);
         return "animals";
     }
 
@@ -58,35 +60,30 @@ public class AnimalController {
                     return "animal-type";
                 }
         }
-
         return "redirect:/animals";
+    }
+
+    private String addSheltersAndTypesAttributes(Model model) {
+        List<ShelterDTO> shelterList = shelterService.getAllShelters();
+        model.addAttribute("shelterList", shelterList);
+
+        List<String> typeList = Arrays.stream(Type.values())
+                .map(Enum::toString)
+                .toList();
+        model.addAttribute("typeList", typeList);
+        return "animal-form";
     }
 
     @GetMapping(value = "/animal-form")
     public String addAnimals (Model model) {
         model.addAttribute("animal", new AnimalDTO());
-        List<ShelterDTO> shelterList = shelterService.getAllShelters();
-        model.addAttribute("shelterList", shelterList);
-
-        List<String> typeList = Arrays.stream(Type.values())
-                                    .map(Enum::toString)
-                                    .toList();
-        model.addAttribute("typeList", typeList);
-        return "animal-form";
+        return addSheltersAndTypesAttributes(model);
     }
 
     @PostMapping(value = "/submit-animal")
     public String submitAnimal(@Valid @ModelAttribute("animal") AnimalDTO animal, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()) {
-            List<ShelterDTO> shelterList = shelterService.getAllShelters();
-            model.addAttribute("shelterList", shelterList);
-
-            List<String> typeList = Arrays.stream(Type.values())
-                    .map(Enum::toString)
-                    .toList();
-            model.addAttribute("typeList", typeList);
-            return "animal-form";
-        }
+        if(bindingResult.hasErrors())
+            return addSheltersAndTypesAttributes(model);
 
         if(animal.getBreed().isBlank())
             animal.setBreed("-");
@@ -110,17 +107,22 @@ public class AnimalController {
             return animalOverview;
         editView.addObject("animal", animal);
 
-        List<String> typeList = Arrays.stream(Type.values()).map(Enum::toString).toList();
+        List<String> typeList = Arrays.stream(Type.values())
+                .map(Enum::toString)
+                .toList();
         model.addAttribute("typeList", typeList);
         List<ShelterDTO> shelterList = shelterService.getAllShelters();
         model.addAttribute("shelterList", shelterList);
+
         return editView;
     }
 
     @PostMapping(value = "/save-animal")
     public String saveEditedAnimal(@Valid @ModelAttribute("animal") AnimalDTO animal, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
-            List<String> typeList = Arrays.stream(Type.values()).map(Enum::toString).toList();
+            List<String> typeList = Arrays.stream(Type.values())
+                    .map(Enum::toString)
+                    .toList();
             model.addAttribute("typeList", typeList);
             List<ShelterDTO> shelterList = shelterService.getAllShelters();
             model.addAttribute("shelterList", shelterList);

@@ -6,6 +6,7 @@ import com.example.SpringBoot.service.AnimalService;
 import com.example.SpringBoot.service.ShelterService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,16 +15,17 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-public class ShelterController {
+public class ShelterController extends BaseController {
     @Autowired
     private AnimalService animalService;
     @Autowired
     private ShelterService shelterService;
 
     @GetMapping(value = "/shelters")
-    public String shelterOverview(Model model) {
+    public String shelterOverview(Model model, Authentication authentication) {
         List<ShelterDTO> shelterList = shelterService.getAllShelters();
         model.addAttribute("shelterList", shelterList);
+        addUserToModel(model, authentication);
         return "shelters";
     }
 

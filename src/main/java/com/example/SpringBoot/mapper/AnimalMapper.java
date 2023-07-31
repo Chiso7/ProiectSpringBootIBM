@@ -4,7 +4,6 @@ import com.example.SpringBoot.dto.AnimalDTO;
 import com.example.SpringBoot.model.Animal;
 import com.example.SpringBoot.model.Shelter;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

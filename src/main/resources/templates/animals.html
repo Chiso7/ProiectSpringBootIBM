@@ -20,7 +20,7 @@
       <th>Breed</th>
       <th>Age</th>
       <th colspan="2">Shelter</th>
-      <th colspan="2">Actions</th>
+      <th th:if="${isAdmin}" colspan="2">Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -34,10 +34,10 @@
       <td class="col-md-1">
         <a th:href="@{'/shelters/' + ${animal.getShelterID()}}" type="button" class="btn btn-dark">View</a>
       </td>
-      <td class="col-md-1">
+      <td th:if="${isAdmin}" class="col-md-1">
         <a th:href="@{'/edit-animal/' + ${animal.id}}" type="button" class="btn btn-dark">Edit</a>
       </td>
-      <td class="col-md-1">
+      <td th:if="${isAdmin}" class="col-md-1">
         <a th:href="@{'/delete-animal/' + ${animal.id}}" type="button" class="btn btn-dark">Delete</a>
       </td>
     </tr>
@@ -45,7 +45,7 @@
   </table>
 </div>
 <br>
-<div class="d-grid col-2 mx-auto">
+<div th:if="${isAdmin}" class="d-grid col-2 mx-auto">
   <a th:href="@{'/animal-form'}" type="button" class="btn btn-dark">Add animal</a>
 </div>
 <br><br>
